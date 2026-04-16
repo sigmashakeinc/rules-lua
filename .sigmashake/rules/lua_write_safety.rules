@@ -6,7 +6,7 @@ rule lua-block-unsafe-patterns {
   priority 90
   severity error
   DENY write
-  IF path GLOB "**/*" AND content CONTAINS "UNSAFE_lua_PATTERN"
+  IF path GLOB "**/*" AND content CONTAINS "os.execute("
   MESSAGE "Blocked an unsafe pattern in lua. Use the recommended best practices for 2025/2026."
 }
 
@@ -14,7 +14,7 @@ rule lua-force-updated-api {
   enabled true
   priority 80
   severity warning
-  ASK write
-  IF path GLOB "**/*" AND content CONTAINS "OLD_lua_API"
+  LOG write
+  IF path GLOB "**/*" AND content CONTAINS "module("
   MESSAGE "You are using an outdated API for lua. Please upgrade to the newer API."
 }
